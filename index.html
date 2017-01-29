@@ -78,7 +78,7 @@ var selected_folder = null;
 // Get all `tiles{something}` entries.
 $.get('/tile_variants.html').done(function(listing_html)
     {
-        var tiles_search_re = new RegExp("(tiles[^ ]*)", "g");
+        var tiles_search_re = new RegExp("(tiles[^\\s]*)", "g");
         var tile_matches = [];
         var x;
         while ((x = tiles_search_re.exec(listing_html)) != null)
