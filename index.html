@@ -67,27 +67,12 @@ body {
     </div>
 
     <br>
-    <div>
-        Search tag by name:
-        <input type="text" id="search_name" placeholder="e.g. python">
-        <input type="button" id="search_button" onclick="search()" value="Search">
-    </div>
 </div>
 
 <script>
 /*
 This script is based on http://bl.ocks.org/mbostock/5914438
 */
-
-
-$('#search_name').on('keyup', function(event) {
-    // Allow tag searching by pressing 'Enter' rather than the 'Search' button.
-    if (event.which == 13)
-    {
-        $('#search_button').click();
-        return false;
-    }
-});
 
 var selected_folder = null;
 // Get all `tiles{something}` entries.
@@ -139,32 +124,6 @@ function main()
         );
 }
 
-
-function search()
-{
-    name = document.getElementById('search_name').value;
-    name = encodeURIComponent(name);
-    $.get('/search/' + selected_folder.substr("tiles_".length) + '/' + name).done(
-            function(response)
-            {
-                if (response == "")
-                {
-                    alert('No such tag.');
-                    return;
-                }
-                var xy = response.split(" ");
-                var x = parseFloat(xy[0]);
-                var y = parseFloat(xy[1]);
-
-                var sc = 1 << 15;
-                svg.call(zoom)
-                    .call(zoom.transform, d3.zoomIdentity
-                        .translate(width / 2, height / 2)
-                        .scale(sc)
-                        .translate(0.5 - x, 0.5 - y));
-            }
-    );
-}
 
 
 function zoomed() {
